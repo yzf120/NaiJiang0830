@@ -1,0 +1,82 @@
+{
+  "_comment": "修改此文件即可更新页面内容（名称、简介、签名、分区、链接、复制值全部可改）。改完后重新部署本文件即可生效，无需改 HTML。",
+
+  "avatar": "assets/avatar.jpg",
+  "background": "assets/bg.jpg",
+
+  "name": { "zh": "广深奶酱（88🚪）", "en": "Naijiang · Guangzhou & Shenzhen（88🚪）" },
+  "bio": { "zh": "奶酱❤ 08/165/90 原创博主", "en": "Naijiang❤ 08/165/90 Original creator" },
+  "signature": {
+    "zh": "奶酱❤ 原创博主 · 户外 · 约会 · vlog · 日常记录",
+    "en": "Naijiang❤ Original creator · Outdoor · Dating · vlog · Daily life"
+  },
+  "footer": {
+    "zh": "遇见你，就是最好的开始 ❤️",
+    "en": "Meeting you is the best beginning ❤️"
+  },
+
+  "ui": {
+    "copied": { "zh": "已复制", "en": "Copied" },
+    "copyFailed": { "zh": "复制失败，请手动复制", "en": "Copy failed, please copy manually" }
+  },
+
+  "sections": [
+    {
+      "title": { "zh": "电报联系方式", "en": "Telegram" },
+      "icon": "✈️",
+      "badgeColor": "#229ED9",
+      "links": [
+        {
+          "icon": "🤖",
+          "label": { "zh": "奶酱的入群机器人", "en": "Naijiang's Entry Bot" },
+          "desc": { "zh": "@ouo3bot", "en": "@ouo3bot" },
+          "url": "https://t.me/ouo3bot"
+        },
+        {
+          "icon": "✈️",
+          "label": { "zh": "奶酱的个人电报", "en": "Naijiang's Personal Telegram" },
+          "desc": { "zh": "@ouo0830", "en": "@ouo0830" },
+          "url": "https://t.me/ouo0830"
+        },
+        {
+          "icon": "🎁",
+          "label": { "zh": "电报免费粉丝福利群", "en": "Telegram Free Fans Group" },
+          "desc": { "zh": "@ouo0834", "en": "@ouo0834" },
+          "url": "https://t.me/ouo0834"
+        },
+        {
+          "icon": "🎬",
+          "label": { "zh": "奶酱的 vlog", "en": "Naijiang's Vlog" },
+          "desc": { "zh": "@ouo0830", "en": "@ouo0830" },
+          "url": "https://t.me/ouo0834"
+        }
+      ]
+    },
+    {
+      "title": { "zh": "X / TWITTER", "en": "X / Twitter" },
+      "icon": "assets/x-logo.png",
+      "badgeColor": "#000000",
+      "links": [
+        {
+          "icon": "assets/x-logo.png",
+          "label": { "zh": "奶酱的 X（推特）", "en": "Naijiang on X (Twitter)" },
+          "desc": { "zh": "@ouo0841", "en": "@ouo0841" },
+          "url": "https://x.com/ouo0841"
+        }
+      ]
+    },
+    {
+      "title": { "zh": "QQ 联系方式", "en": "QQ" },
+      "icon": "🐧",
+      "badgeColor": "#12B7F5",
+      "links": [
+        {
+          "icon": "🐧",
+          "label": { "zh": "QQ 号（点击复制）", "en": "QQ Number (tap to copy)" },
+          "desc": { "zh": "3834869835", "en": "3834869835" },
+          "copy": "3834869835"
+        }
+      ]
+    }
+  ]
+}

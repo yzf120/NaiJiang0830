@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="我的个人主页 · 社交链接聚合页">
+  <meta name="theme-color" content="#c41e3a">
+  <title>我的主页</title>
+
+  <meta property="og:title" content="我的主页">
+  <meta property="og:description" content="这里汇集了我的全部社交账号与联系方式">
+  <meta property="og:type" content="website">
+
+  <style>
+    :root {
+      --crimson: #c41e3a;
+      --crimson-soft: #e85d75;
+      --crimson-deep: #8b1538;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+        'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+      min-height: 100vh;
+      color: #fff;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .title-font {
+      font-family: 'Kaiti SC', 'STKaiti', 'KaiTi', '楷体', 'PingFang SC', serif;
+      letter-spacing: 0.06em;
+    }
+
+    /* 背景 */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse 70% 45% at 50% 8%, rgba(196, 30, 58, 0.28), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 90%, rgba(139, 21, 56, 0.4), transparent 65%),
+        linear-gradient(160deg, #2a0a16 0%, #1b0610 45%, #0d0308 100%);
+    }
+
+    .bg-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.45;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 65% 40% at 50% 10%, rgba(196, 30, 58, 0.15), transparent 55%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0%, rgba(40, 8, 16, 0.35) 38%, rgba(12, 4, 8, 0.62) 100%);
+    }
+
+    /* 语言切换器 */
+    .lang-wrap {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: flex-end;
+      padding: max(1.25rem, env(safe-area-inset-top)) 1.25rem 0;
+    }
+
+    .lang-switch { position: relative; }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      color: #fff;
+      background: rgba(18, 6, 10, 0.4);
+      border: 1px solid rgba(232, 93, 117, 0.3);
+      border-radius: 999px;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.25s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .lang-btn:hover,
+    .lang-btn[aria-expanded="true"] {
+      border-color: rgba(232, 93, 117, 0.55);
+      box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.2);
+    }
+
+    .lang-chevron { font-size: 10px; color: rgba(255, 200, 210, 0.6); transition: transform 0.25s ease; }
+
+    .lang-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      width: 160px;
+      padding: 6px;
+      background: rgba(16, 5, 10, 0.82);
+      border: 1px solid rgba(232, 93, 117, 0.4);
+      border-radius: 16px;
+      backdrop-filter: blur(16px) saturate(1.1);
+      -webkit-backdrop-filter: blur(16px) saturate(1.1);
+      box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.5);
+      animation: menuIn 0.2s ease;
+      overflow: hidden;
+      display: none;
+    }
+
+    .lang-menu.open { display: block; }
+
+    .lang-option {
+      padding: 10px 14px;
+      font-size: 14px;
+      border-radius: 12px;
+      color: rgba(255, 230, 235, 0.95);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .lang-option:hover { background: rgba(196, 30, 58, 0.18); }
+    .lang-option.active { background: rgba(196, 30, 58, 0.28); color: var(--crimson-soft); }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 44vh;
+      display: flex;
+      flex-direction: column;
+      padding: max(4.5rem, 13vh) 1.5rem 0.5rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .avatar {
+      width: 88px; height: 88px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.5), 0 0 32px rgba(228, 93, 117, 0.35), 0 12px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    .avatar-placeholder {
+      width: 88px; height: 88px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      color: #fff;
+      background: linear-gradient(135deg, #ff8fab 0%, #c41e3a 100%);
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.5), 0 0 32px rgba(228, 93, 117, 0.35), 0 12px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    .hero-name {
+      font-size: 2rem;
+      line-height: 1.2;
+      color: #fff0f5;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65), 0 0 24px rgba(196, 30, 58, 0.2);
+    }
+
+    .hero-bio {
+      margin-top: 12px;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      color: rgba(255, 228, 233, 0.95);
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
+    }
+
+    .hero-signature {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 18px;
+      max-width: 320px;
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-line;
+      color: rgba(255, 240, 245, 0.95);
+      background: rgba(18, 6, 10, 0.4);
+      border: 1px solid rgba(228, 93, 117, 0.45);
+      border-radius: 18px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+    }
+
+    .scroll-hint {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding: 6px 0 0;
+      color: rgba(228, 93, 117, 0.75);
+      animation: bounce 2.2s ease-in-out infinite;
+    }
+
+    /* 主内容 */
+    .main {
+      max-width: 448px;
+      margin: 0 auto;
+      padding: 4px 16px max(4rem, env(safe-area-inset-bottom));
+    }
+
+    .panel {
+      position: relative;
+      background: rgba(16, 5, 10, 0.4);
+      border: 1.5px solid rgba(228, 93, 117, 0.42);
+      border-radius: 32px;
+      padding: 24px 20px;
+      backdrop-filter: blur(20px) saturate(1.1);
+      -webkit-backdrop-filter: blur(20px) saturate(1.1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 24px 56px -20px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.7s ease 0.08s forwards;
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 12%; right: 12%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--crimson-soft), transparent);
+      opacity: 0.75;
+    }
+
+    .panel::after {
+      content: '✨';
+      position: absolute;
+      top: -11px; right: 22px;
+      font-size: 16px;
+      opacity: 0.85;
+      filter: drop-shadow(0 0 8px rgba(196, 30, 58, 0.4));
+    }
+
+    .section { margin-bottom: 28px; }
+    .section:last-child { margin-bottom: 0; }
+    .section + .section { padding-top: 24px; border-top: 1px solid rgba(228, 93, 117, 0.28); }
+
+    .section-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: rgba(255, 230, 235, 0.95);
+      padding-bottom: 7px;
+      margin-bottom: 16px;
+      position: relative;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, var(--crimson-soft), transparent);
+      opacity: 0.8;
+    }
+
+    .links { display: flex; flex-direction: column; gap: 10px; }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 14px 16px 14px 8px;
+      text-align: left;
+      color: #fff;
+      background: rgba(22, 8, 12, 0.4);
+      border: 1.5px solid rgba(228, 93, 117, 0.38);
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      font-family: inherit;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 22px rgba(0, 0, 0, 0.22);
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+    }
+
+    .link-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      border-color: rgba(228, 93, 117, 0.65);
+      background: rgba(30, 10, 16, 0.52);
+      box-shadow: 0 14px 28px -8px rgba(196, 30, 58, 0.3), 0 0 0 2px rgba(228, 93, 117, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .link-btn:active { transform: translateY(0) scale(1); }
+    .link-btn:focus-visible { outline: 2px solid var(--crimson-soft); outline-offset: 2px; }
+
+    .icon-badge {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 14px;
+      margin-left: 10px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.5);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .icon-img {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    .icon-badge .icon-img {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+    }
+
+    .link-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-label {
+      font-size: 15px;
+      letter-spacing: 0.03em;
+      line-height: 1.5;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+    }
+
+    .link-desc {
+      margin-top: 2px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+      color: rgba(255, 214, 222, 0.8);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+    }
+
+    .link-arrow {
+      flex-shrink: 0;
+      font-size: 14px;
+      color: rgba(228, 93, 117, 0.55);
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), color 0.28s ease;
+    }
+    .link-btn:hover .link-arrow { transform: translateX(4px); color: rgba(255, 200, 210, 0.8); }
+
+    .footer {
+      margin-top: 32px;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: rgba(255, 228, 233, 0.75);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.7s ease 0.16s forwards;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(2.5rem, env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(20px);
+      padding: 10px 18px;
+      font-size: 13px;
+      color: #fff;
+      background: rgba(18, 6, 10, 0.85);
+      border: 1px solid rgba(232, 93, 117, 0.5);
+      border-radius: 999px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes menuIn { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); opacity: 0.55; } 50% { transform: translateY(6px); opacity: 1; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero, .panel, .footer { animation: none; opacity: 1; transform: none; }
+      .scroll-hint { animation: none; }
+      .link-btn:hover { transform: none; }
+    }
+
+    @media (max-width: 380px) {
+      .panel { padding: 20px 14px; border-radius: 26px; }
+      .link-btn { padding-top: 12px; padding-bottom: 12px; }
+      .link-label { font-size: 14px; }
+      .hero-name { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-image" id="bg-image"></div>
+    <div class="bg-overlay"></div>
+  </div>
+
+  <div class="lang-wrap">
+    <div class="lang-switch" id="lang-switch">
+      <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+        <span>🌐</span>
+        <span id="lang-current">中文</span>
+        <span class="lang-chevron" id="lang-chevron">▼</span>
+      </button>
+      <div class="lang-menu" id="lang-menu" role="listbox"></div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div id="hero-content"></div>
+    <div class="scroll-hint" aria-hidden="true"><span>⌄</span></div>
+  </header>
+
+  <main class="main">
+    <div class="panel" id="panel"></div>
+    <footer class="footer" id="footer"></footer>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ============================================================
+     * 兜底配置：仅当 config.json 加载失败时使用。
+     * 日常修改请改 config.json，不要改这里。
+     * ============================================================ */
+    var DEFAULT_CONFIG = {
+      avatar: 'assets/avatar.jpg',
+      background: '',
+      name: { zh: '广深奶酱（88🚪）', en: 'Naijiang · Guangzhou & Shenzhen（88🚪）' },
+      bio: { zh: '奶酱❤ 08/165/90 原创博主', en: 'Naijiang❤ 08/165/90 Original creator' },
+      signature: {
+        zh: '奶酱❤ 原创博主 · 户外 · 约会 · vlog · 日常记录',
+        en: 'Naijiang❤ Original creator · Outdoor · Dating · vlog · Daily life'
+      },
+      footer: {
+        zh: '遇见你，就是最好的开始 ❤️',
+        en: 'Meeting you is the best beginning ❤️'
+      },
+      ui: {
+        copied: { zh: '已复制', en: 'Copied' },
+        copyFailed: { zh: '复制失败，请手动复制', en: 'Copy failed, please copy manually' }
+      },
+      sections: [
+        {
+          title: { zh: '电报联系方式', en: 'Telegram' },
+          icon: '✈️',
+          badgeColor: '#229ED9',
+          links: [
+            { icon: '🤖', label: { zh: '奶酱的入群机器人', en: "Naijiang's Entry Bot" }, desc: { zh: '@ouo3bot', en: '@ouo3bot' }, url: 'https://t.me/ouo3bot' },
+            { icon: '✈️', label: { zh: '奶酱的个人电报', en: "Naijiang's Personal Telegram" }, desc: { zh: '@ouo0830', en: '@ouo0830' }, url: 'https://t.me/ouo0830' },
+            { icon: '🎁', label: { zh: '电报免费粉丝福利群', en: 'Telegram Free Fans Group' }, desc: { zh: '@ouo0834', en: '@ouo0834' }, url: 'https://t.me/ouo0834' },
+            { icon: '🎬', label: { zh: '奶酱的 vlog', en: "Naijiang's Vlog" }, desc: { zh: '@ouo0830', en: '@ouo0830' }, url: 'https://t.me/ouo0830' }
+          ]
+        },
+        {
+          title: { zh: 'X / TWITTER', en: 'X / Twitter' },
+          icon: 'assets/x-logo.png',
+          badgeColor: '#000000',
+          links: [
+            { icon: 'assets/x-logo.png', label: { zh: '奶酱的 X（推特）', en: 'Naijiang on X (Twitter)' }, desc: { zh: '@ouo0841', en: '@ouo0841' }, url: 'https://x.com/ouo0841/status/2101499326128394300?s=46' }
+          ]
+        },
+        {
+          title: { zh: 'QQ 联系方式', en: 'QQ' },
+          icon: '🐧',
+          badgeColor: '#12B7F5',
+          links: [
+            { icon: '🐧', label: { zh: 'QQ 号（点击复制）', en: 'QQ Number (tap to copy)' }, desc: { zh: '3834869835', en: '3834869835' }, copy: '3834869835' }
+          ]
+        }
+      ]
+    };
+
+    /* ============================================================
+     * 渲染与交互逻辑（无需修改）
+     * ============================================================ */
+    var LANGS = [
+      { code: 'zh', label: '中文' },
+      { code: 'en', label: 'English' }
+    ];
+
+    var currentLang = 'zh';
+
+    /* 判断图标是否为图片资源（路径以图片扩展名结尾时按 <img> 渲染，否则按 emoji 文本渲染） */
+    function isImageIcon(icon) {
+      return !!icon && /\.(png|jpe?g|gif|webp|svg)$/i.test(icon);
+    }
+
+    function createIcon(icon) {
+      if (isImageIcon(icon)) {
+        var img = document.createElement('img');
+        img.className = 'icon-img';
+        img.src = icon;
+        img.alt = '';
+        return img;
+      }
+      var span = document.createElement('span');
+      span.textContent = icon || '';
+      return span;
+    }
+
+    function t(value, lang) {
+      if (value == null) return '';
+      if (typeof value === 'string') return value;
+      return value[lang] || value.zh || '';
+    }
+
+    function render(config, lang) {
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+      applyMeta(config, lang);
+      applyBackground(config);
+      renderHero(config, lang);
+      renderPanel(config, lang);
+      renderFooter(config, lang);
+      renderLangMenu(lang);
+    }
+
+    /* 标题、描述、分享卡片信息同样由 config 驱动 */
+    function applyMeta(config, lang) {
+      var name = t(config.name, lang) || 'Link';
+      var desc = t(config.bio, lang) || '';
+      document.title = name;
+      setMeta('name', 'description', desc);
+      setMeta('property', 'og:title', name);
+      setMeta('property', 'og:description', desc);
+    }
+
+    function setMeta(attrKey, attrValue, content) {
+      if (!content) return;
+      var el = document.querySelector('meta[' + attrKey + '="' + attrValue + '"]');
+      if (el) el.setAttribute('content', content);
+    }
+
+    function applyBackground(config) {
+      if (config.background) {
+        document.getElementById('bg-image').style.backgroundImage = 'url("' + config.background + '")';
+      }
+    }
+
+    function renderHero(config, lang) {
+      var container = document.getElementById('hero-content');
+      container.innerHTML = '';
+      container.appendChild(config.avatar
+        ? createAvatarImg(config.avatar, t(config.name, lang))
+        : createAvatarPlaceholder(t(config.name, lang)));
+
+      var name = document.createElement('h1');
+      name.className = 'hero-name title-font';
+      name.textContent = t(config.name, lang);
+      container.appendChild(name);
+
+      var bio = document.createElement('p');
+      bio.className = 'hero-bio';
+      bio.textContent = t(config.bio, lang);
+      container.appendChild(bio);
+
+      var sig = document.createElement('p');
+      sig.className = 'hero-signature';
+      sig.textContent = t(config.signature, lang);
+      container.appendChild(sig);
+    }
+
+    function createAvatarImg(src, alt) {
+      var img = document.createElement('img');
+      img.className = 'avatar';
+      img.src = src;
+      img.alt = alt;
+      return img;
+    }
+
+    function createAvatarPlaceholder(name) {
+      var div = document.createElement('div');
+      div.className = 'avatar-placeholder title-font';
+      div.textContent = (name || '?').charAt(0);
+      return div;
+    }
+
+    function renderPanel(config, lang) {
+      var panel = document.getElementById('panel');
+      panel.innerHTML = '';
+      (config.sections || []).forEach(function (section) {
+        var sec = document.createElement('section');
+        sec.className = 'section';
+
+        var header = document.createElement('div');
+        header.className = 'section-header';
+        var headerIcon = createIcon(section.icon);
+        var headerTitle = document.createElement('span');
+        headerTitle.textContent = t(section.title, lang);
+        header.appendChild(headerIcon);
+        header.appendChild(headerTitle);
+        sec.appendChild(header);
+
+        var links = document.createElement('div');
+        links.className = 'links';
+        (section.links || []).forEach(function (link) {
+          links.appendChild(createLinkButton(link, section.badgeColor, lang));
+        });
+        sec.appendChild(links);
+        panel.appendChild(sec);
+      });
+    }
+
+    function createLinkButton(link, defaultBadgeColor, lang) {
+      var isCopy = !!link.copy;
+      var el;
+      if (isCopy) {
+        el = document.createElement('button');
+        el.type = 'button';
+        el.addEventListener('click', function () {
+          copyText(link.copy, t(link.label, lang));
+        });
+      } else {
+        el = document.createElement('a');
+        el.href = link.url || '#';
+        el.target = '_blank';
+        el.rel = 'noopener noreferrer';
+      }
+      el.className = 'link-btn';
+
+      var badge = document.createElement('div');
+      badge.className = 'icon-badge';
+      if (isImageIcon(link.icon)) {
+        badge.appendChild(createIcon(link.icon));
+      } else {
+        badge.textContent = link.icon || '🔗';
+      }
+      badge.style.background = link.badgeColor || defaultBadgeColor || 'rgba(0,0,0,0.5)';
+      el.appendChild(badge);
+
+      var textBox = document.createElement('div');
+      textBox.className = 'link-text';
+
+      var label = document.createElement('div');
+      label.className = 'link-label';
+      label.textContent = t(link.label, lang);
+      textBox.appendChild(label);
+
+      var desc = t(link.desc, lang);
+      if (desc) {
+        var descEl = document.createElement('div');
+        descEl.className = 'link-desc';
+        descEl.textContent = desc;
+        textBox.appendChild(descEl);
+      }
+      el.appendChild(textBox);
+
+      var arrow = document.createElement('span');
+      arrow.className = 'link-arrow';
+      arrow.textContent = isCopy ? '📋' : '›';
+      el.appendChild(arrow);
+
+      return el;
+    }
+
+    function renderFooter(config, lang) {
+      document.getElementById('footer').textContent = t(config.footer, lang);
+    }
+
+    function renderLangMenu(lang) {
+      var menu = document.getElementById('lang-menu');
+      menu.innerHTML = '';
+      LANGS.forEach(function (l) {
+        var opt = document.createElement('div');
+        opt.className = 'lang-option' + (l.code === lang ? ' active' : '');
+        opt.setAttribute('role', 'option');
+        opt.textContent = l.label;
+        opt.addEventListener('click', function () { switchLanguage(l.code); });
+        menu.appendChild(opt);
+      });
+      var current = LANGS.find(function (l) { return l.code === lang; });
+      document.getElementById('lang-current').textContent = current ? current.label : '中文';
+    }
+
+    function switchLanguage(lang) {
+      if (!LANGS.some(function (l) { return l.code === lang; })) return;
+      currentLang = lang;
+      try { localStorage.setItem('linkpage-lang', lang); } catch (e) {}
+      render(window.__config || DEFAULT_CONFIG, lang);
+      closeLangMenu();
+    }
+
+    function toggleLangMenu() {
+      var menu = document.getElementById('lang-menu');
+      var btn = document.getElementById('lang-btn');
+      var open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+      document.getElementById('lang-chevron').style.transform = open ? 'rotate(180deg)' : '';
+    }
+
+    function closeLangMenu() {
+      document.getElementById('lang-menu').classList.remove('open');
+      document.getElementById('lang-btn').setAttribute('aria-expanded', 'false');
+      document.getElementById('lang-chevron').style.transform = '';
+    }
+
+    document.getElementById('lang-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleLangMenu();
+    });
+    document.addEventListener('click', function (e) {
+      var sw = document.getElementById('lang-switch');
+      if (!sw.contains(e.target)) closeLangMenu();
+    });
+
+    function copyText(text, name) {
+      function fallbackCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        return ok;
+      }
+      function done(ok) {
+        var ui = (window.__config || DEFAULT_CONFIG).ui || {};
+        var base = ok ? t(ui.copied, currentLang) || '已复制' : t(ui.copyFailed, currentLang) || '复制失败';
+        showToast(ok && name ? base + '：' + name : base);
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(fallbackCopy()); });
+      } else {
+        done(fallbackCopy());
+      }
+    }
+
+    var toastTimer = null;
+    function showToast(msg) {
+      var toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+    }
+
+    /* 合并远程配置与兜底配置，防止字段缺失报错 */
+    function mergeConfig(fetched) {
+      if (!fetched || typeof fetched !== 'object') return DEFAULT_CONFIG;
+      var merged = {};
+      Object.keys(DEFAULT_CONFIG).forEach(function (k) { merged[k] = fetched[k] !== undefined ? fetched[k] : DEFAULT_CONFIG[k]; });
+      if (Array.isArray(fetched.sections)) {
+        merged.sections = fetched.sections;
+      }
+      return merged;
+    }
+
+    /* 加载 config.json（加时间戳避免缓存），失败则用兜底配置 */
+    function loadConfig(callback) {
+      fetch('config.json?t=' + Date.now())
+        .then(function (res) {
+          if (!res.ok) throw new Error('config not found');
+          return res.json();
+        })
+        .then(function (data) {
+          callback(mergeConfig(data));
+        })
+        .catch(function () {
+          callback(DEFAULT_CONFIG);
+        });
+    }
+
+    function init() {
+      var saved = null;
+      try { saved = localStorage.getItem('linkpage-lang'); } catch (e) {}
+      if (saved && LANGS.some(function (l) { return l.code === saved; })) {
+        currentLang = saved;
+      }
+      loadConfig(function (config) {
+        window.__config = config;
+        render(config, currentLang);
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
