@@ -27,22 +27,16 @@
       "badgeColor": "#229ED9",
       "links": [
         {
-          "icon": "🤖",
-          "label": { "zh": "奶酱的入群机器人", "en": "Naijiang's Entry Bot" },
-          "desc": { "zh": "@ouo3bot", "en": "@ouo3bot" },
-          "url": "https://t.me/ouo3bot"
-        },
-        {
           "icon": "✈️",
           "label": { "zh": "奶酱的个人电报", "en": "Naijiang's Personal Telegram" },
-          "desc": { "zh": "@ouo0830", "en": "@ouo0830" },
-          "url": "https://t.me/ouo0830"
+          "desc": { "zh": "@ouo0835", "en": "@ouo0835" },
+          "url": "https://t.me/ouo0835"
         },
         {
           "icon": "🎁",
           "label": { "zh": "电报免费粉丝福利群", "en": "Telegram Free Fans Group" },
-          "desc": { "zh": "@ouo0834", "en": "@ouo0834" },
-          "url": "https://t.me/ouo0834"
+          "desc": { "zh": "@ouo0836", "en": "@ouo0836" },
+          "url": "https://t.me/ouo0836"
         },
         {
           "icon": "🎬",
@@ -60,8 +54,8 @@
         {
           "icon": "assets/x-logo.png",
           "label": { "zh": "奶酱的 X（推特）", "en": "Naijiang on X (Twitter)" },
-          "desc": { "zh": "@ouo0841", "en": "@ouo0841" },
-          "url": "https://x.com/ouo0841"
+          "desc": { "zh": "@ouo0844", "en": "@ouo0844" },
+          "url": "https://x.com/ouo0844"
         }
       ]
     },
@@ -75,6 +69,12 @@
           "label": { "zh": "QQ 号（点击复制）", "en": "QQ Number (tap to copy)" },
           "desc": { "zh": "3834869835", "en": "3834869835" },
           "copy": "3834869835"
+        },
+        {
+          "icon": "👥",
+          "label": { "zh": "QQ 群号（点击复制）", "en": "QQ Group Number (tap to copy)" },
+          "desc": { "zh": "1063847281", "en": "1063847281" },
+          "copy": "1063847281"
         }
       ]
     }
