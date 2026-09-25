@@ -75,6 +75,12 @@
           "label": { "zh": "QQ 群号（点击复制）", "en": "QQ Group Number (tap to copy)" },
           "desc": { "zh": "1063847281", "en": "1063847281" },
           "copy": "1063847281"
+        },
+        {
+          "icon": "👥",
+          "label": { "zh": "QQ 群号2（点击复制）", "en": "QQ Group Number 2 (tap to copy)" },
+          "desc": { "zh": "774051113", "en": "774051113" },
+          "copy": "774051113"
         }
       ]
     }
