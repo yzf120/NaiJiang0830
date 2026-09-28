@@ -65,12 +65,6 @@
       "badgeColor": "#12B7F5",
       "links": [
         {
-          "icon": "🐧",
-          "label": { "zh": "QQ 号（点击复制）", "en": "QQ Number (tap to copy)" },
-          "desc": { "zh": "3834869835", "en": "3834869835" },
-          "copy": "3834869835"
-        },
-        {
           "icon": "👥",
           "label": { "zh": "QQ 群号（点击复制）", "en": "QQ Group Number (tap to copy)" },
           "desc": { "zh": "774051113", "en": "774051113" },
