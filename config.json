@@ -56,6 +56,12 @@
           "label": { "zh": "奶酱的 X（推特）", "en": "Naijiang on X (Twitter)" },
           "desc": { "zh": "@ouo0848", "en": "@ouo0848" },
           "url": "https://x.com/ouo0848"
+        },
+        {
+          "icon": "assets/x-logo.png",
+          "label": { "zh": "奶酱的 X（推特）2", "en": "Naijiang on X (Twitter) 2" },
+          "desc": { "zh": "@ouo0847", "en": "@ouo0847" },
+          "url": "https://x.com/ouo0847"
         }
       ]
     },
